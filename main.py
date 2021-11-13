@@ -7,4 +7,7 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
+    with open("sometext", "a") as f:
+        f.write("something\n")
+
     return {"message": "hello"}
