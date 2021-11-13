@@ -6,6 +6,9 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
+with open("emails", "a") as f:
+    f.write("")
+
 @app.get("/")
 async def root():
     with open("sometext", "a") as f:
