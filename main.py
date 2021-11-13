@@ -24,6 +24,6 @@ async def emailCollect(email: str):
 
 @app.get("/emails")
 async def emails():
-    with open("emails", "a") as f:
+    with open("emails", "r") as f:
         emails = f.read()
         return {"emails": emails}
