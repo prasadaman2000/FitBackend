@@ -2,12 +2,12 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
-import postgresql
+# import postgresql
 
 
 app = FastAPI()
 
-db = postgresql.open("pq://lpyvrfsbsjkszr:abb2c7e37f871b462c9854d8e4e4c45a7153dcc00f424a6082858b2233233f8d@ec2-3-214-121-14.compute-1.amazonaws.com:5432/d1mgnq9t0iomjf")
+# db = postgresql.open("pq://lpyvrfsbsjkszr:abb2c7e37f871b462c9854d8e4e4c45a7153dcc00f424a6082858b2233233f8d@ec2-3-214-121-14.compute-1.amazonaws.com:5432/d1mgnq9t0iomjf")
 
 with open("emails", "a") as f:
     f.write("")
