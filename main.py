@@ -10,4 +10,6 @@ async def root():
     with open("sometext", "a") as f:
         f.write("something\n")
 
-    return {"message": "hello"}
+    with open("sometext", "r") as f:
+        s = f.read()
+        return {"message": s}
