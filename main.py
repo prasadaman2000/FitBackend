@@ -25,14 +25,13 @@ except:
 with open("emails", "a") as f:
     f.write("")
 
+numBad = 0
+
 @app.get("/")
 async def root():
-    with open("sometext", "a") as f:
-        f.write("something\n")
-
-    with open("sometext", "r") as f:
-        s = f.read()
-        return {"message": s}
+    global numBad
+    numBad += 1
+    return f"cannot get / - you are the {numBad} person to try"
 
 
 @app.get("/emailCollect/{email}")
