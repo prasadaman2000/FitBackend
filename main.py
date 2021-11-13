@@ -2,12 +2,25 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
-# import postgresql
+import psycopg2
 
 
 app = FastAPI()
 
-# db = postgresql.open("pq://lpyvrfsbsjkszr:abb2c7e37f871b462c9854d8e4e4c45a7153dcc00f424a6082858b2233233f8d@ec2-3-214-121-14.compute-1.amazonaws.com:5432/d1mgnq9t0iomjf")
+conn = psycopg2.connect(
+    database="d1mgnq9t0iomjf", user='lpyvrfsbsjkszr', 
+  password='abb2c7e37f871b462c9854d8e4e4c45a7153dcc00f424a6082858b2233233f8d', host='ec2-3-214-121-14.compute-1.amazonaws.com', port='5432'
+)
+
+conn.autocommit = True
+cursor = conn.cursor()
+
+try:
+    sql = '''CREATE TABLE emails(email varchar);'''
+    cursor.execute(sql)
+    conn.commit()
+except:
+    pass
 
 with open("emails", "a") as f:
     f.write("")
@@ -24,12 +37,14 @@ async def root():
 
 @app.get("/emailCollect/{email}")
 async def emailCollect(email: str):
-    with open("emails", "a") as f:
-        f.write(email + "\n")
+    sql = f"INSERT INTO emails values('{email}')"
+    cursor.execute(sql)
+    conn.commit()
     return "good"
 
 @app.get("/emails")
 async def emails():
-    with open("emails", "r") as f:
-        emails = f.readlines()
-        return {"emails": emails}
+    sql = "SELECT email FROM emails;"
+    cursor.execute(sql)
+    res = cursor.fetchall()
+    return res
