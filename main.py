@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Response
 from models.Register import Register, Login
 
-import uuid
+import random
 
 import psycopg2
 
@@ -93,4 +93,5 @@ async def emails():
 
 @app.get("/recommendation/{userEmail}")
 async def getRecommendation(userEmail: str):
-    return {"url": "https://w7.pngwing.com/pngs/380/764/png-transparent-paper-box-computer-icons-symbol-random-icons-miscellaneous-angle-text.png", "name": "aman"}
+    urls = ["https://w7.pngwing.com/pngs/72/64/png-transparent-person-silhouette-human-animals-text-logo-thumbnail.png", "https://w7.pngwing.com/pngs/380/764/png-transparent-paper-box-computer-icons-symbol-random-icons-miscellaneous-angle-text.png"]
+    return {"url": random.choice(urls), "name": "aman"}
