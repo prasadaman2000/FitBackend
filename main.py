@@ -93,5 +93,5 @@ async def emails():
 
 @app.get("/recommendation/{userEmail}")
 async def getRecommendation(userEmail: str):
-    urls = ["https://w7.pngwing.com/pngs/72/64/png-transparent-person-silhouette-human-animals-text-logo-thumbnail.png", "https://w7.pngwing.com/pngs/380/764/png-transparent-paper-box-computer-icons-symbol-random-icons-miscellaneous-angle-text.png"]
+    urls = ["https://us.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-keepall-xs-lv-aerogram-travel--M80950_PM2_Front%20view.png?wid=2048&hei=2048", "https://w7.pngwing.com/pngs/380/764/png-transparent-paper-box-computer-icons-symbol-random-icons-miscellaneous-angle-text.png"]
     return {"url": random.choice(urls), "name": "aman"}
