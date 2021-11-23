@@ -90,3 +90,7 @@ async def emails():
     cursor.execute(sql)
     res = cursor.fetchall()
     return res
+
+@app.get("/recommendation/{userEmail}")
+async def getRecommendation(userEmail: str):
+    return {"url": "https://w7.pngwing.com/pngs/380/764/png-transparent-paper-box-computer-icons-symbol-random-icons-miscellaneous-angle-text.png", "name": "aman"}
