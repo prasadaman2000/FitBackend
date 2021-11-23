@@ -1,7 +1,8 @@
-from fastapi import FastAPI
-from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
+from fastapi import FastAPI, HTTPException, Response
+from models.Register import Register, Login
+
+import uuid
+
 import psycopg2
 
 
@@ -22,10 +23,51 @@ try:
 except:
     pass
 
+try:
+    sql = '''CREATE TABLE accounts(email varchar, password varchar);'''
+    cursor.execute(sql)
+    conn.commit()
+except:
+    pass
+
 with open("emails", "a") as f:
     f.write("")
 
+
 numBad = 0
+
+@app.post("/register")
+async def register(obj: Register):
+    sql = f"SELECT * FROM accounts WHERE email = '{obj.email}';"
+    
+
+    cursor.execute(sql)
+    if len(cursor.fetchall()) > 0:
+        raise HTTPException(400, "Account exists")
+    
+    sql_insert = f"INSERT INTO accounts values('{obj.email}', '{obj.password}');"
+    cursor.execute(sql_insert)
+    return cursor.statusmessage
+
+
+@app.get("/10014269")
+async def getAllAccounts():
+    sql = "SELECT * FROM accounts;"
+    cursor.execute(sql)
+    return cursor.fetchall()
+
+
+@app.post("/login")
+async def login(login: Login):
+    sql = f"SELECT * FROM accounts WHERE email = '{login.email}' and password = '{login.password}';"
+    cursor.execute(sql)
+
+    accs = cursor.fetchall()
+    if len(accs) == 0:
+        raise HTTPException(400, "Account not found")
+    
+    return "good"
+
 
 @app.get("/")
 async def root():
@@ -40,6 +82,7 @@ async def emailCollect(email: str):
     cursor.execute(sql)
     conn.commit()
     return "good"
+
 
 @app.get("/emails")
 async def emails():
